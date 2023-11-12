@@ -3,10 +3,7 @@ package com.bloodredtape.dynamicsmod;
 import com.bloodredtape.dynamicsmod.core.Subsystem;
 import com.bloodredtape.dynamicsmod.events.DayCycle;
 import com.bloodredtape.dynamicsmod.events.DayCycleEvent;
-import com.bloodredtape.dynamicsmod.progression.CreeperProgression;
-import com.bloodredtape.dynamicsmod.progression.SkeletonProgression;
-import com.bloodredtape.dynamicsmod.progression.SpiderProgression;
-import com.bloodredtape.dynamicsmod.progression.ZombieProgression;
+import com.bloodredtape.dynamicsmod.progression.*;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.Event;
@@ -32,6 +29,7 @@ public class DynamicsMod
         register(SpiderProgression.class);
         register(SkeletonProgression.class);
         register(CreeperProgression.class);
+        register(EndermanProgression.class);
     }
 
     public <T extends Event> void addListener(Consumer<T> consumer){
