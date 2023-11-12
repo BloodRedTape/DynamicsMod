@@ -34,6 +34,11 @@ public class MobUtils{
         return If(()->(rand.nextFloat(1.f) <= chance));
     }
 
+    public MobUtils WithAccording(LevelToChange map){
+        long currentLevel = MobUtils.GetProgressionLevel(mob);
+        return With(map.Map(currentLevel));
+    }
+
     public MobUtils Has(EquipmentSlot slot, Item item){
         return If(()->(mob.getItemBySlot(slot).getItem() == item));
     }
