@@ -8,16 +8,24 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.monster.Skeleton;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.event.entity.living.MobSpawnEvent;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Hashtable;
-import java.util.Random;
 
 public class SkeletonProgression extends ProgressionBase {
+
+    private ItemStack Enchant(Item item, Enchantment enchantment, int level){
+        ItemStack stack = new ItemStack(item);
+        stack.enchant(enchantment, level);
+        return stack;
+    }
 
     private final ArrayList<ArrayList<Pair<EquipmentSlot, ItemStack>>> upgradeLevels = new ArrayList<>(){{
         add(new ArrayList<>(){{
@@ -29,6 +37,7 @@ public class SkeletonProgression extends ProgressionBase {
         }});
         add(new ArrayList<>(){{
             add(new Pair<>(EquipmentSlot.FEET, new ItemStack(Items.IRON_BOOTS)));
+            add(new Pair<>(EquipmentSlot.MAINHAND, Enchant(Items.BOW, Enchantments.POWER_ARROWS, 1)));
         }});
         add(new ArrayList<>(){{
             add(new Pair<>(EquipmentSlot.HEAD, new ItemStack(Items.LEATHER_HELMET)));
@@ -36,31 +45,33 @@ public class SkeletonProgression extends ProgressionBase {
         add(new ArrayList<>(){{
             add(new Pair<>(EquipmentSlot.HEAD, new ItemStack(Items.IRON_HELMET)));
             add(new Pair<>(EquipmentSlot.CHEST, new ItemStack(Items.IRON_CHESTPLATE)));
+            add(new Pair<>(EquipmentSlot.MAINHAND, Enchant(Items.BOW, Enchantments.POWER_ARROWS, 2)));
         }});
         add(new ArrayList<>(){{
             add(new Pair<>(EquipmentSlot.LEGS, new ItemStack(Items.IRON_LEGGINGS)));
         }});
         add(new ArrayList<>(){{
             add(new Pair<>(EquipmentSlot.HEAD, new ItemStack(Items.DIAMOND_HELMET)));
+            add(new Pair<>(EquipmentSlot.MAINHAND, Enchant(Items.BOW, Enchantments.POWER_ARROWS, 3)));
         }});
         add(new ArrayList<>(){{
             add(new Pair<>(EquipmentSlot.LEGS, new ItemStack(Items.DIAMOND_LEGGINGS)));
         }});
         add(new ArrayList<>(){{
             add(new Pair<>(EquipmentSlot.FEET, new ItemStack(Items.DIAMOND_BOOTS)));
+            add(new Pair<>(EquipmentSlot.MAINHAND, Enchant(Items.BOW, Enchantments.POWER_ARROWS, 4)));
         }});
         add(new ArrayList<>(){{
             add(new Pair<>(EquipmentSlot.CHEST, new ItemStack(Items.DIAMOND_CHESTPLATE)));
         }});
+        add(new ArrayList<>(){{
+            add(new Pair<>(EquipmentSlot.MAINHAND, Enchant(Items.BOW, Enchantments.POWER_ARROWS, 5)));
+        }});
     }};
 
     private final Dictionary<Long, MobEffectInstance> effectLevels = new Hashtable<>(){{
-        put(3L, new MobEffectInstance(MobEffects.DAMAGE_BOOST, MobEffectInstance.INFINITE_DURATION, 1));
         put(8L, new MobEffectInstance(MobEffects.MOVEMENT_SPEED, MobEffectInstance.INFINITE_DURATION, 1));
-        put(11L, new MobEffectInstance(MobEffects.DAMAGE_BOOST, MobEffectInstance.INFINITE_DURATION, 2));
     }};
-
-    private final Random rand = new Random();
 
     @Override
     public void onRegister(DynamicsMod mod) {

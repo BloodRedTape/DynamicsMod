@@ -6,7 +6,6 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.monster.Creeper;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Explosion;
 import net.minecraftforge.event.entity.living.MobSpawnEvent;
@@ -48,21 +47,18 @@ public class CreeperProgression extends ProgressionBase {
 
         Equip(mob.getEntity(), progressionLevel);
 
-        MobUtils.If(creeper).After(5).With(0.8f).Do(this::EquipWithTNT);
-    }
-
-    void EquipWithTNT(Creeper creeper){
-        creeper.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.TNT));
-        creeper.setDropChance(EquipmentSlot.MAINHAND, 0.4f);
+        MobUtils.If(creeper).After(5).With(0.8f)
+                .DoGive(EquipmentSlot.MAINHAND, Items.TNT)
+                .DoSetChance(EquipmentSlot.MAINHAND, 0.5f);
     }
 
     public void onCreeperExplosion(ExplosionEvent explosionEvent) {
         if (!(explosionEvent.getExplosion().getDirectSourceEntity() instanceof Creeper creeper))
             return;
 
+        creeper.removeAllEffects();
 
         if(MobUtils.If(creeper).Has(EquipmentSlot.MAINHAND, Items.TNT).With(0.3f).Valid()){
-            creeper.removeAllEffects();
 
             var explosion = new Explosion(creeper.level(), null, creeper.getX(), creeper.getY(), creeper.getZ(), 8.f, true, Explosion.BlockInteraction.KEEP);
             explosion.explode();

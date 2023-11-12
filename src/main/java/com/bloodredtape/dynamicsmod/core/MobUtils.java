@@ -3,6 +3,7 @@ package com.bloodredtape.dynamicsmod.core;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -51,14 +52,24 @@ public class MobUtils{
         return true;
     }
 
-    public void Do(Runnable runnable){
+    public MobUtils Do(Runnable runnable){
         if(Valid())
             runnable.run();
+        return this;
     }
 
-    public <T extends Mob> void Do(Consumer<T> comsumer){
+    public <T extends Mob> MobUtils Do(Consumer<T> comsumer){
         if(Valid())
             comsumer.accept((T) mob);
+        return this;
+    }
+
+    public MobUtils DoGive(EquipmentSlot slot, Item item){
+        return Do(()->mob.setItemSlot(slot, new ItemStack(item)));
+    }
+
+    public MobUtils DoSetChance(EquipmentSlot slot, float chance){
+        return Do(()->mob.setDropChance(slot, chance));
     }
 
     public static MobUtils If(Mob mob){
