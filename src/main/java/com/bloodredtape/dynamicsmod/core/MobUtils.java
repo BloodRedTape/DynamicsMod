@@ -31,6 +31,13 @@ public class MobUtils{
         });
     }
 
+    public MobUtils Before(long level){
+        return If(()->{
+            long currentLevel = MobUtils.GetProgressionLevel(mob);
+            return currentLevel <= level;
+        });
+    }
+
     public MobUtils With(float chance){
         return If(()->(rand.nextFloat(1.f) <= chance));
     }
