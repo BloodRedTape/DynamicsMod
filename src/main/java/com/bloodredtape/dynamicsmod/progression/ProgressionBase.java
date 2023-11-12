@@ -1,5 +1,6 @@
 package com.bloodredtape.dynamicsmod.progression;
 
+import com.bloodredtape.dynamicsmod.core.MobUtils;
 import com.bloodredtape.dynamicsmod.core.Subsystem;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -11,10 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
-import java.util.ArrayList;
-import java.util.Dictionary;
-import java.util.Hashtable;
-import java.util.Iterator;
+import java.util.*;
 
 public abstract class ProgressionBase implements Subsystem {
     public ArrayList<ArrayList<Pair<EquipmentSlot, ItemStack>>> getUpgradeLevels(){
@@ -24,6 +22,7 @@ public abstract class ProgressionBase implements Subsystem {
     public Dictionary<Long, MobEffectInstance> getEffectLevels(){
         return new Hashtable<>();
     }
+    private final Random rand = new Random();
 
     public void Equip(Mob mob, long level){
 
@@ -44,21 +43,13 @@ public abstract class ProgressionBase implements Subsystem {
         }
     }
 
-
-    public long GetProgressionLevel(Mob mob){
-        long daytime = mob.level().getDayTime();
-        long day = daytime / 24000;
-
-        return day / 2;
-    }
-
     public void RideSpider(Mob mob){
         Level level = mob.level();
 
         Spider spider = new Spider(EntityType.SPIDER, level);
         spider.setPos(new Vec3(mob.getX(), mob.getY(), mob.getZ()));
 
-        long progressionLevel = GetProgressionLevel(mob);
+        long progressionLevel = MobUtils.GetProgressionLevel(mob);
         var spiderProgression = new SpiderProgression();
         spiderProgression.Equip(spider, progressionLevel);
 

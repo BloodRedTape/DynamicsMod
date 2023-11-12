@@ -1,6 +1,7 @@
 package com.bloodredtape.dynamicsmod.progression;
 
 import com.bloodredtape.dynamicsmod.DynamicsMod;
+import com.bloodredtape.dynamicsmod.core.MobUtils;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -32,19 +33,7 @@ public class CreeperProgression extends ProgressionBase {
     @Override
     public void onRegister(DynamicsMod mod) {
         mod.addListener(this::onCreeper);
-        mod.addListener((ExplosionEvent explosionEvent)->{
-            var source = explosionEvent.getExplosion().getDirectSourceEntity();
-
-            if(source instanceof Creeper creeper){
-                creeper.removeAllEffects();
-
-                if(creeper.getItemBySlot(EquipmentSlot.MAINHAND).getItem() == Items.TNT && rand.nextFloat() < 0.3){
-                    var explosion = new Explosion(creeper.level(), null, creeper.getX(), creeper.getY(), creeper.getZ(), 8.f, true, Explosion.BlockInteraction.KEEP);
-                    explosion.explode();
-                    explosion.finalizeExplosion(true);
-                }
-            }
-        });
+        mod.addListener(this::onCreeperExplosion);
     }
 
     public void onCreeper(MobSpawnEvent.FinalizeSpawn mob){
@@ -52,13 +41,29 @@ public class CreeperProgression extends ProgressionBase {
             return;
         }
 
-        long progressionLevel = GetProgressionLevel(mob.getEntity());
+        long progressionLevel = MobUtils.GetProgressionLevel(mob.getEntity());
 
         Equip(mob.getEntity(), progressionLevel);
 
-        if(progressionLevel >= 5){
-            creeper.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.TNT));
-            creeper.setDropChance(EquipmentSlot.MAINHAND, 0.4f);
+        MobUtils.If(creeper).After(5).With(0.8f).Do(this::EquipWithTNT);
+    }
+
+    void EquipWithTNT(Creeper creeper){
+        creeper.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.TNT));
+        creeper.setDropChance(EquipmentSlot.MAINHAND, 0.4f);
+    }
+
+    public void onCreeperExplosion(ExplosionEvent explosionEvent) {
+        if (!(explosionEvent.getExplosion().getDirectSourceEntity() instanceof Creeper creeper))
+            return;
+
+
+        if(MobUtils.If(creeper).Has(EquipmentSlot.MAINHAND, Items.TNT).With(0.3f).Valid()){
+            creeper.removeAllEffects();
+
+            var explosion = new Explosion(creeper.level(), null, creeper.getX(), creeper.getY(), creeper.getZ(), 8.f, true, Explosion.BlockInteraction.KEEP);
+            explosion.explode();
+            explosion.finalizeExplosion(true);
         }
     }
 

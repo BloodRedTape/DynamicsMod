@@ -1,6 +1,7 @@
 package com.bloodredtape.dynamicsmod.progression;
 
 import com.bloodredtape.dynamicsmod.DynamicsMod;
+import com.bloodredtape.dynamicsmod.core.MobUtils;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -70,13 +71,11 @@ public class SkeletonProgression extends ProgressionBase {
             return;
         }
 
-        long progressionLevel = GetProgressionLevel(mob.getEntity());
+        long progressionLevel = MobUtils.GetProgressionLevel(mob.getEntity());
 
         Equip(mob.getEntity(), progressionLevel);
 
-        if(progressionLevel >= 9 && rand.nextFloat() < 0.2){
-            RideSpider(skeleton);
-        }
+        MobUtils.If(skeleton).After(9).With(0.2f).Do(this::RideSpider);
     }
 
     @Override

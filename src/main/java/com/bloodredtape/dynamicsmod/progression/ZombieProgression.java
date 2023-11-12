@@ -1,6 +1,7 @@
 package com.bloodredtape.dynamicsmod.progression;
 
 import com.bloodredtape.dynamicsmod.DynamicsMod;
+import com.bloodredtape.dynamicsmod.core.MobUtils;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -77,7 +78,7 @@ public class ZombieProgression extends ProgressionBase {
             return;
         }
 
-        long progressionLevel = GetProgressionLevel(mob.getEntity());
+        long progressionLevel = MobUtils.GetProgressionLevel(mob.getEntity());
 
         Equip(mob.getEntity(), progressionLevel);
     }

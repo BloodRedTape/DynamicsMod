@@ -1,6 +1,7 @@
 package com.bloodredtape.dynamicsmod.progression;
 
 import com.bloodredtape.dynamicsmod.DynamicsMod;
+import com.bloodredtape.dynamicsmod.core.MobUtils;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.monster.Spider;
@@ -32,7 +33,7 @@ public class SpiderProgression extends ProgressionBase {
             return;
         }
 
-        long progressionLevel = GetProgressionLevel(mob.getEntity());
+        long progressionLevel = MobUtils.GetProgressionLevel(mob.getEntity());
 
         Equip(mob.getEntity(), progressionLevel);
     }
