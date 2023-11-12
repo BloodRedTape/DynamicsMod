@@ -1,5 +1,6 @@
 package com.bloodredtape.dynamicsmod.progression;
 
+import com.bloodredtape.dynamicsmod.core.Rand;
 import com.bloodredtape.dynamicsmod.core.Subsystem;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.world.effect.MobEffect;
@@ -15,30 +16,50 @@ import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.function.Supplier;
 
 public abstract class MobProgression implements Subsystem {
-
-    private final Hashtable<Long, ArrayList<Pair<EquipmentSlot, ItemStack>>> items = new Hashtable<>();
+    private final Hashtable<Long, ArrayList<Pair<EquipmentSlot, Supplier<ItemStack>>>> items = new Hashtable<>();
     private final Hashtable<Long, ArrayList<Pair<MobEffect, Integer>>> effects = new Hashtable<>();
 
-    public void SetItemUpgrade(long level, EquipmentSlot slot, Item item, ArrayList<Pair<Enchantment, Integer>> enchantments){
+
+    public void SetItemUpgrade(long level, EquipmentSlot slot, Supplier<ItemStack> factory){
         if(!items.contains(level))
             items.put(level, new ArrayList<>());
 
-        ArrayList<Pair<EquipmentSlot, ItemStack>> levelUpgrades = items.get(level);
+        ArrayList<Pair<EquipmentSlot, Supplier<ItemStack>>> levelUpgrades = items.get(level);
 
-        ItemStack stack = new ItemStack(item);
+        levelUpgrades.add(new Pair<>(slot, factory));
+    }
+    public void SetItemUpgrade(long level, EquipmentSlot slot, Item item, ArrayList<Pair<Enchantment, Integer>> enchantments){
+        SetItemUpgrade(level, slot, ()->{
+            ItemStack stack = new ItemStack(item);
 
-        for(var enchantment: enchantments){
-            stack.enchant(enchantment.getFirst(), enchantment.getSecond());
-        }
-        levelUpgrades.add(new Pair<>(slot, stack));
+            for(var enchantment: enchantments){
+                stack.enchant(enchantment.getFirst(), enchantment.getSecond());
+            }
+
+            return stack;
+        });
     }
 
     public void SetItemUpgrade(long level, EquipmentSlot slot, Item item, Enchantment enchantment, int enchantmentLevel){
         SetItemUpgrade(level, slot, item, new ArrayList<>(){{
             add(new Pair<>(enchantment, enchantmentLevel));
         }});
+    }
+
+    public void SetItemUpgrade(long level, EquipmentSlot slot, Rand<Item> itemFactory){
+        Supplier<ItemStack> itemStackFactory = ()->{
+            return new ItemStack(itemFactory.Get());
+        };
+        SetItemUpgrade(level, slot, itemStackFactory);
+    }
+
+    public Rand<Item> SetRandItemUpgrade(long level, EquipmentSlot slot){
+        var rand = new Rand<Item>();
+        SetItemUpgrade(level, slot, rand);
+        return rand;
     }
 
     public void SetItemUpgrade(long level, EquipmentSlot slot, Item item) {
@@ -102,7 +123,7 @@ public abstract class MobProgression implements Subsystem {
                 continue;
 
             for(var upgrade: upgrades) {
-                equip.put(upgrade.getFirst(), upgrade.getSecond());
+                equip.put(upgrade.getFirst(), upgrade.getSecond().get());
             }
         }
 

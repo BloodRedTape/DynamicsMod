@@ -8,14 +8,25 @@ import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.event.entity.living.MobSpawnEvent;
 
+
 public class ZombieProgression extends ArmorMobProgression {
 
     public ZombieProgression(){
-        SetItemUpgrade(0, EquipmentSlot.MAINHAND, Items.WOODEN_SWORD);
-        SetItemUpgrade(5, EquipmentSlot.MAINHAND, Items.STONE_SWORD);
+
+        SetRandItemUpgrade(0, EquipmentSlot.MAINHAND)
+                .With(0.7f, Items.WOODEN_SWORD)
+                .With(0.3f, Items.WOODEN_AXE);
+        SetRandItemUpgrade(5, EquipmentSlot.MAINHAND)
+                .With(0.7f, Items.STONE_SWORD)
+                .With(0.3f, Items.STONE_AXE);
+        SetRandItemUpgrade(9, EquipmentSlot.MAINHAND)
+                .With(0.7f, Items.IRON_SWORD)
+                .With(0.3f, Items.IRON_AXE);
+        SetRandItemUpgrade(13, EquipmentSlot.MAINHAND)
+                .With(0.7f, Items.DIAMOND_SWORD)
+                .With(0.3f, Items.DIAMOND_AXE);
+
         SetEffect(7, MobEffects.MOVEMENT_SPEED, 1);
-        SetItemUpgrade(9, EquipmentSlot.MAINHAND, Items.IRON_SWORD);
-        SetItemUpgrade(13, EquipmentSlot.MAINHAND, Items.DIAMOND_SWORD);
     }
 
     @Override
