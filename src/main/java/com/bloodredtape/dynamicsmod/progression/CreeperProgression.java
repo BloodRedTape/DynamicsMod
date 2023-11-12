@@ -43,6 +43,10 @@ public class CreeperProgression extends NonArmorMobProgression {
             explosion.explode();
             explosion.finalizeExplosion(true);
         }
+
+        if(MobUtils.If(creeper).Has(EquipmentSlot.MAINHAND, Items.TNT).With(0.1f).Valid()){
+
+        }
     }
 }
 

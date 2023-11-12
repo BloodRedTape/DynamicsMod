@@ -30,6 +30,7 @@ public class DynamicsMod
         register(SkeletonProgression.class);
         register(CreeperProgression.class);
         register(EndermanProgression.class);
+        register(WitchProgression.class);
     }
 
     public <T extends Event> void addListener(Consumer<T> consumer){
