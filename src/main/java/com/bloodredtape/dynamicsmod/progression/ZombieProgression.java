@@ -20,46 +20,46 @@ public class ZombieProgression extends ProgressionBase {
     private final ArrayList<ArrayList<Pair<EquipmentSlot, ItemStack>>> upgradeLevels = new ArrayList<>(){{
         add(new ArrayList<>(){{
             add(new Pair<>(EquipmentSlot.MAINHAND, new ItemStack(Items.WOODEN_SWORD)));
-        }});
+        }}); //0
         add(new ArrayList<>(){{
             add(new Pair<>(EquipmentSlot.MAINHAND, new ItemStack(Items.STONE_SWORD)));
             add(new Pair<>(EquipmentSlot.CHEST, new ItemStack(Items.LEATHER_CHESTPLATE)));
-        }});
+        }});//1
         add(new ArrayList<>(){{
             add(new Pair<>(EquipmentSlot.LEGS, new ItemStack(Items.LEATHER_LEGGINGS)));
             add(new Pair<>(EquipmentSlot.FEET, new ItemStack(Items.LEATHER_BOOTS)));
-        }});
+        }});//2
         add(new ArrayList<>(){{
             add(new Pair<>(EquipmentSlot.FEET, new ItemStack(Items.IRON_BOOTS)));
-        }});
+        }});//3
         add(new ArrayList<>(){{
             add(new Pair<>(EquipmentSlot.HEAD, new ItemStack(Items.LEATHER_HELMET)));
-        }});
+        }});//4
         add(new ArrayList<>(){{
             add(new Pair<>(EquipmentSlot.MAINHAND, new ItemStack(Items.IRON_SWORD)));
-        }});
+        }});//5
         add(new ArrayList<>(){{
             add(new Pair<>(EquipmentSlot.HEAD, new ItemStack(Items.IRON_HELMET)));
             add(new Pair<>(EquipmentSlot.CHEST, new ItemStack(Items.IRON_CHESTPLATE)));
-        }});
+        }});//6
         add(new ArrayList<>(){{
             add(new Pair<>(EquipmentSlot.LEGS, new ItemStack(Items.IRON_LEGGINGS)));
-        }});
+        }});//7
         add(new ArrayList<>(){{
             add(new Pair<>(EquipmentSlot.HEAD, new ItemStack(Items.DIAMOND_HELMET)));
-        }});
+        }});//8
         add(new ArrayList<>(){{
             add(new Pair<>(EquipmentSlot.MAINHAND, new ItemStack(Items.DIAMOND_SWORD)));
-        }});
+        }});//9
         add(new ArrayList<>(){{
             add(new Pair<>(EquipmentSlot.LEGS, new ItemStack(Items.DIAMOND_LEGGINGS)));
-        }});
+        }});//10
         add(new ArrayList<>(){{
             add(new Pair<>(EquipmentSlot.FEET, new ItemStack(Items.DIAMOND_BOOTS)));
-        }});
+        }});//11
         add(new ArrayList<>(){{
             add(new Pair<>(EquipmentSlot.CHEST, new ItemStack(Items.DIAMOND_CHESTPLATE)));
-        }});
+        }});//12
     }};
 
     private final Dictionary<Long, MobEffectInstance> effectLevels = new Hashtable<>(){{

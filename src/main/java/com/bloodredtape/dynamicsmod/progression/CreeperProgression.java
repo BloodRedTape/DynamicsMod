@@ -19,13 +19,16 @@ import java.util.Random;
 public class CreeperProgression extends ProgressionBase {
 
     private final Dictionary<Long, MobEffectInstance> effectLevels = new Hashtable<>(){{
-        put(3L, new MobEffectInstance(MobEffects.DAMAGE_BOOST, MobEffectInstance.INFINITE_DURATION, 1));
-        put(4L, new MobEffectInstance(MobEffects.MOVEMENT_SPEED, MobEffectInstance.INFINITE_DURATION, 1));
-        put(5L, new MobEffectInstance(MobEffects.DAMAGE_BOOST, MobEffectInstance.INFINITE_DURATION, 2));
-        put(6L, new MobEffectInstance(MobEffects.ABSORPTION, MobEffectInstance.INFINITE_DURATION, 8));
-        put(7L, new MobEffectInstance(MobEffects.DAMAGE_BOOST, MobEffectInstance.INFINITE_DURATION, 3));
-        put(8L, new MobEffectInstance(MobEffects.MOVEMENT_SPEED, MobEffectInstance.INFINITE_DURATION, 2));
-        put(9L, new MobEffectInstance(MobEffects.ABSORPTION, MobEffectInstance.INFINITE_DURATION, 15));
+        put(2L, new MobEffectInstance(MobEffects.DAMAGE_BOOST, MobEffectInstance.INFINITE_DURATION, 1)); //equals to stone sword
+        put(3L, new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, MobEffectInstance.INFINITE_DURATION, 1));
+        put(4L, new MobEffectInstance(MobEffects.MOVEMENT_SPEED, MobEffectInstance.INFINITE_DURATION, 1)); // 1.2x speed
+        put(5L, new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, MobEffectInstance.INFINITE_DURATION, 2)); // 0.40 damage consumption == leather
+        put(6L, new MobEffectInstance(MobEffects.JUMP, MobEffectInstance.INFINITE_DURATION, 1));
+        put(7L, new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, MobEffectInstance.INFINITE_DURATION, 3)); // 0.60 damage consumption == iron
+        put(8L, new MobEffectInstance(MobEffects.JUMP, MobEffectInstance.INFINITE_DURATION, 1));
+        put(9L, new MobEffectInstance(MobEffects.MOVEMENT_SPEED, MobEffectInstance.INFINITE_DURATION, 2)); // 1.4x speed
+        put(11L, new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, MobEffectInstance.INFINITE_DURATION, 4)); // 0.80 damage consumption == diamond
+        put(20L, new MobEffectInstance(MobEffects.DAMAGE_BOOST, MobEffectInstance.INFINITE_DURATION, 2));//equals to neterite sword
     }};
 
     private final Random rand = new Random();
